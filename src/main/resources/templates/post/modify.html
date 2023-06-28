@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://ww.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{layout/base_layout}">
+	
+    <main layout:fragment="main">
+        <div class="my-2 card">
+            <div class="card-header text-center">
+                <h1>포스트 수정 페이지</h1>
+            </div>
+            <div class="card-body">
+                <form id="postModifyForm">
+                    <div>
+                        <label class="form-label" for="id">번호</label>
+                        <input name="id" class="form-control" id="id" th:value="${post.id}" readonly/>
+                    </div>
+                    <div>
+                        <label class="form-label" for="title">제목</label>
+                        <input name="title" class="form-control" id="title" th:value="${post.title}" />
+                    </div>
+                    <div>
+                        <label class="form-label" for="content">내용</label>
+                        <textarea name="content" class="form-control" id="content" th:text="${post.content}" ></textarea>
+                    </div>
+                    <div>
+                        <label class="form-label" for="author">작성자</label>
+                        <input name="author" class="form-control" id="author" th:value="${post.author}" readonly/>
+                    </div>
+                </form>
+                <div> <!-- button/input을 form 안에 넣으면 클릭의 기본이 submit 기능(주소가 바뀜)을 함 -->
+                    <button id="btnDelete" class="my-2 btn btn-outline-danger">삭제</button> 
+                    <button id="btnUpdate" class="my-2 btn btn-outline-success">업데이트</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <th:block layout:fragment="myscripts">
+        <script src="/js/post/modify.js"></script>
+    </th:block>
+    
+</html>
+
