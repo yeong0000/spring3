@@ -23,6 +23,20 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
     private final PostRepository postRepository;
     
+    @Transactional
+    //-> DB에서 검색한 엔터티를 수정하면, 트랜젝션이 끝나는 시점에 update 쿼리가 자동으로 실행됨.
+    public void update(long id, ReplyUpdateDto dto) {
+        log.info("update(id={}, dto={})", id, dto);
+        
+        //1.댓글 아이디로 DB에서 엔터티를 검색(select):
+        Reply entity = replyRepository.findById(id).orElseThrow();
+        
+        //2.검색한 엔터티의 프로퍼티를 수정:
+        entity.update(dto.getReplyText());
+        
+    }
+
+    
     public void delete(long id) {
         log.info("delete(id={})", id);
         
@@ -79,15 +93,7 @@ public class ReplyService {
         return replyRepository.countByPost(post);
     }
 
-    @Transactional
-    public void update(long id, ReplyUpdateDto dto) {
-        
-        Reply entity = replyRepository.findById(id).orElseThrow();
-        
-        entity.update(dto); 
-        
-    }
-
+    
     
 
    

@@ -58,28 +58,33 @@ document.addEventListener('DOMContentLoaded',()=>{
             .catch((error) => console.log(error)); //실패 응답일 때 실행할 콜백 등록
     };
     
+    //댓글수정
     const updateReply = (e) => {
       //console.log(e.target);
-      const replyId = e.target.getAttribute('data-id');
+      const replyId = e.target.getAttribute('data-id'); //수정할 댓글 아이디
       console.log(replyId);
-      //Ajax UPDATE 방식 요청 주소
-      const textAreaId = `textarea#replyText_${replyId}`;
+      
+      const textAreaId = `textarea#replyText_${replyId}`; //댓글 입력 textarea 아이디
       console.log(document.querySelector(textAreaId).value); 
       
-      const id =replyId;
+      //수정할 댓글 내용
       const replyText = document.querySelector(textAreaId).value;
+      if(replyText === ''){ //댓글 내용이 비어있으면
+          alert('수정할 댓글 내용을 입력하세요');
+          return;
+      }
       
       //TODO: Ajax PUT 요청
-      const reqUrl = `/api/reply/${id}`;    
-        const data = {replyText}; //{key:value}, {replyText: replyText}
+      const reqUrl = `/api/reply/${replyId}`;  //요청주소
+      const data = {replyText}; //{replyText: replyText}, 요청 데이터(수정할 댓글 내용)
       
      axios
         .put(reqUrl, data)
-        .then((response) => {
+        .then((response) => { //성공 응답일 때 동작할 콜백을 등록
             alert(`댓글 업데이트 성공(${response.data})`);
             getRepliesWithPostId(); //댓글 목록 업데이트
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error)); //에러 응답일때 동작할 콜백을 등록
       
     };
     
@@ -103,9 +108,9 @@ document.addEventListener('DOMContentLoaded',()=>{
                     <span class="d-none">${reply.id}</span>
                     <span class="fw-bold">${reply.writer}</span>
                 </div>
-                <div>
-                    <textarea id="replyText_${reply.id}">${reply.replyText}</textarea>
-                </div>
+                
+                <textarea id="replyText_${reply.id}">${reply.replyText}</textarea>
+                
                 <div>
                     <button class="btnDelete btn btn-outline-danger" data-id="${reply.id}">삭제</button>
                     <button class="btnModify btn btn-outline-dark" data-id="${reply.id}">수정</button>
