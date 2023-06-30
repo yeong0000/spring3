@@ -75,8 +75,9 @@ public class PostController {
         model.addAttribute("post",post);
         
         //REPLIES 테이블에서 해당 포스트에 달린 댓글 개수를 검색
-        List<Reply> replyList = replyService.read(post);
-        model.addAttribute("replyCount",replyList.size());
+//        List<Reply> replyList = replyService.read(post);
+        long count = replyService.countByPost(post); //댓글 개수 가져와서 그 값을 모델에 준다
+        model.addAttribute("replyCount",count);
         
         //컨트롤러 메서드의 리턴값이 void인 경우
         //뷰의 이름은 요청 주소와 같다!
@@ -110,7 +111,7 @@ public class PostController {
     public String search(PostSearchDto dto, Model model) {
         log.info("search(dto={})", dto);
         
-        // TODO: postService의 검색 기능 호출:
+        //postService의 검색 기능 호출:
         List<Post> list = postService.search(dto);
         
         //검색 결과를 Model에 저장해서 뷰로 전달:
