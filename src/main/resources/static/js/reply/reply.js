@@ -12,6 +12,10 @@
  * 댓글 등록, 수정, 삭제, 검색
  */
 document.addEventListener('DOMContentLoaded',()=>{
+    //로그인한 사용자 이름 -> 댓글 등록, 수정, 삭제할 때 사용하기 위해서
+    const authName = document.querySelector('div#authName').innerText;
+    
+    
     //부트스트랩 Collapse 객체를 생성. 초기 상태는 화면에 보이지 않는 상태
     const bsCollapse = new bootstrap.Collapse('div#replyToggleDiv', {toggle:false});
     
@@ -109,15 +113,26 @@ document.addEventListener('DOMContentLoaded',()=>{
                     <span class="fw-bold">${reply.writer}</span>
                 </div>
                 
-                <textarea id="replyText_${reply.id}">${reply.replyText}</textarea>
-                
+             `;
+             
+             //로그인한 사용자와 댓글 작성자가 같을 때만 삭제, 수정 버튼을 보여줌.
+             if (authName === reply.writer) {
+                 htmlStr += `
+                 <textarea id="replyText_${reply.id}">${reply.replyText}</textarea>
                 <div>
                     <button class="btnDelete btn btn-outline-danger" data-id="${reply.id}">삭제</button>
                     <button class="btnModify btn btn-outline-dark" data-id="${reply.id}">수정</button>
                 </div>
-            </div>
             `;
+            }else{
+                htmlStr += ` 
+                <textarea id="replyText_${reply.id}" readonly>${reply.replyText}</textarea>
+                `;
+            }
+            
+             htmlStr += '</div>';
         }
+       
         
         //작성된 HTML 문자열을 div 요소의 innerHTML로 설정.
         replies.innerHTML = htmlStr;
@@ -169,8 +184,8 @@ document.addEventListener('DOMContentLoaded',()=>{
         //댓글 내용 찾음
         const replyText = document.querySelector('textarea#replyText').value;
         
-        //TODO: 댓글 작성자 -> admin. 나중에 로그인한 사용자 아이디로 변경
-        const writer = 'admin';
+        //댓글 작성자 -> 로그인한 사용자 아이디로 설정
+        const writer = authName;
         
         //댓글 내용이 비어 있으면 경고창을 보여주고 종료.
         if(replyText === ''){

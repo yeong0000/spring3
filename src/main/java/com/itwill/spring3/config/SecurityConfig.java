@@ -28,6 +28,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
     
+    /*
     //로그인할 때 사용할 임시 사용자(메모리에 임시저장) 생성
     @Bean
     public UserDetailsService inMemoryUserDetailsService() {
@@ -53,6 +54,7 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(user1, user2, user3);
         
     }
+    */
     
     //Security Filter 설정 bean:
     //로그인/로그아웃 설정

@@ -27,7 +27,10 @@
                         <input name="author" class="form-control" id="author" th:value="${post.author}" readonly/>
                     </div>
                 </form>
-                <div> <!-- button/input을 form 안에 넣으면 클릭의 기본이 submit 기능(주소가 바뀜)을 함 -->
+                
+                <!-- 로그인 사용자와 포스트 사용자가 같으면 수정하기 보여줌 -->
+                <div th:if="${#authentication.name} == ${post.author}"> 
+                    <!-- button/input을 form 안에 넣으면 클릭의 기본이 submit 기능(주소가 바뀜)을 함 -->
                     <button id="btnDelete" class="my-2 btn btn-outline-danger">삭제</button> 
                     <button id="btnUpdate" class="my-2 btn btn-outline-success">업데이트</button>
                 </div>
