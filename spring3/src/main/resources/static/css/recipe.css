@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+/* 이미지 업로드 컨테이너 스타일 */
+#recipe-image-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 53px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+    margin-top: 10px;
+}
+#recipe-image-upload:before{
+ content: "이미지 업로드(선택)"
+}
+
+
+
+/* 이미지 업로드 컨테이너 내부 요소들 스타일
+#recipe-image-upload input[type="file"] {
+    display: none;
+}*/
+
+
+/*#recipe-image-upload {
+    margin-top: 10px;  요소를 한 줄 아래로 내림 
+  }
+ */ 
+
+/*
+  input[name="TIP"] {
+    display: block;  input 요소를 블록 레벨로 변경하여 한 줄 아래로 내림 
+    margin-top: 10px;  input 요소와 div 요소 사이에 여백 추가 
+  }
+  */
